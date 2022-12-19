@@ -91,7 +91,7 @@
         success (data) {
           console.log("在线推送创建成功", data);
         },
-        webPushcallback (cod, tip) {
+        webPushcallback (code, tip) {
           console.log("用户得到的状态码及提示", code, tip);
         },
         baseUrl: queryUrl.get("baseUrl"), //服务器域名如果不存在则用打包时注入的地址
