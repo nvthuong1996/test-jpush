@@ -91,11 +91,11 @@
         success (data) {
           console.log("在线推送创建成功", data);
         },
-        webPushcallback (cod, tip) {
+        webPushcallback (code, tip) {
           console.log("用户得到的状态码及提示", code, tip);
         },
         baseUrl: queryUrl.get("baseUrl"), //服务器域名如果不存在则用打包时注入的地址
-        webSocketUrl: queryUrl.get("webSocketUrl"), //服务器域名如果不存在则用打包时注入的地址
+        //webSocketUrl: queryUrl.get("webSocketUrl"), //服务器域名如果不存在则用打包时注入的地址
         //swUrl?: string; //默认 "/sw.min." + sdkEnv.version + ".js"
         canGetInfo (d) {
           //此时可以得到RegId 也可以在d里面取到所有的数据
