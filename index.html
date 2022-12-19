@@ -1,0 +1,140 @@
+
+
+<!DOCTYPE html>
+<html style="background-color: #ebebeb;">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  </head>
+  <script type="text/javascript" src="./webPushSdk.min.1.0.0.js"></script>
+
+  <body>
+
+    <form action="/">
+      <label for="">report_url</label>
+      <input placeholder="report_url" name="report_url" id="report_url"/>
+      <br>
+      <label for="">appkey</label>
+      <input placeholder="appkey" name="appkey" id="appkey"/>
+      <br>
+
+      <label for="">user_str</label>
+      <input placeholder="user_str" name="user_str" id="user_str"/>
+      <br>
+      <label for="">baseUrl</label>
+      <input placeholder="baseUrl" name="baseUrl" id="baseUrl"/>
+      <br>
+      <label for="">webSocketUrl</label>
+      <input placeholder="webSocketUrl" name="webSocketUrl" id="webSocketUrl"/>
+      <br>
+      <button onclick="applyChangeConfigOnClick">Apply</button>
+    </form>
+
+
+    <h1 id="MTpush">MTpush-P example.</h1>
+    <h5 id="rid">RegistrationID:</h5>
+    <h5 id="per">Browser Notification Permissions:：</h5>
+    <button onclick="onEvent()">Set up event listeners</button><br />
+    <button onclick="init()">initialization</button><br />
+    <button onclick="getRegistrationID()">Get RegistrationID</button><br />
+    <button onclick="stopPush()">stop push</button><br />
+    <button onclick="getPushAuthority()">Check push service status</button><br />
+    <button onclick="getWebPermission()">Browser Notification Permissions</button><br />
+    <div>Tips: sw.min.1.0.0.js (version number is modified according to the actual situation) Please put it in the root directory of the website, because the service sw.xx.js file can only take over the pages under the directory
+    </div>
+    <input id="userInput" type="text" placeholder="Please enter tagalias object" style="width:100%">
+    <div>Example：{"tags":["test1","test2"],"alias":"swefgwwefwfwfwf"}</div>
+    <button onclick="setTagsAlias()">set tag or alias</button><br />
+
+  </body>
+  <script>
+    function applyChangeConfigOnClick(){
+
+    }
+    // 请在初始化前注册事件监听
+    function onEvent () {
+      // 极光通道断开连接时的回调
+      MTpushInterface.mtPush.onDisconnect(function () {
+        console.log("onDisconnect");
+      });
+      //得到推送消息(web推送，浏览器厂商通道)
+      MTpushInterface.onMsgReceive((msgData) => {
+        //msgData数据结构{data:{xxx},type:0} type:0是极光通道，1是系统通道
+        console.log("得到推送消息:", msgData);
+      });
+    }
+
+    queryUrl = new URLSearchParams(window.location.search)
+    console.log("report_url: ",queryUrl.get("report_url"));
+    console.log("appkey: ",queryUrl.get("appkey"));
+    console.log("user_str: ",queryUrl.get("user_str") || "adminDemo" );
+    console.log("baseUrl: ",queryUrl.get("baseUrl") );
+    console.log("webSocketUrl: ",queryUrl.get("webSocketUrl") );
+
+    document.getElementById("report_url").value = queryUrl.get("report_url")
+    document.getElementById("appkey").value = queryUrl.get("appkey")
+    document.getElementById("user_str").value = queryUrl.get("user_str") || "adminDemo"
+    document.getElementById("baseUrl").value = queryUrl.get("baseUrl")
+    document.getElementById("webSocketUrl").value = queryUrl.get("webSocketUrl")
+
+    //  推送初始化 
+    MTpushInterface.init(
+      {
+        report_url: queryUrl.get("report_url"), //统计上报地址 必填
+        appkey: queryUrl.get("appkey"),
+        user_str: queryUrl.get("user_str") || "adminDemo",
+        fail (data) {
+          console.log("在线推送创建失败", data);
+        },
+        success (data) {
+          console.log("在线推送创建成功", data);
+        },
+        webPushcallback (cod, tip) {
+          console.log("用户得到的状态码及提示", code, tip);
+        },
+        baseUrl: queryUrl.get("baseUrl"), //服务器域名如果不存在则用打包时注入的地址
+        webSocketUrl: queryUrl.get("webSocketUrl"), //服务器域名如果不存在则用打包时注入的地址
+        //swUrl?: string; //默认 "/sw.min." + sdkEnv.version + ".js"
+        canGetInfo (d) {
+          //此时可以得到RegId 也可以在d里面取到所有的数据
+          console.log("得到RegId", MTpushInterface.getRegistrationID(), d);
+          // MTpushInterface.setTagsAlias({ tags: ["test1", "test2"], alias: "swefgwwefwfwfwf" });
+        },
+        custom: (res) => {
+          //当使用自定义提示配置时，需调用res来请求并配置权限
+          document.getElementById("xx")?.addEventListener("click", res);
+        },
+      }
+    );
+
+    function getRegistrationID () {
+      var rid = MTpushInterface.getRegistrationID();
+      document.getElementById("rid").innerHTML = "RegistrationID:" + rid;
+    };
+
+    function stopPush () {
+      window.MTpushInterface.mtPush.stopPush();
+      getRegistrationID();
+    };
+    function getWebPermission () {
+      let per = MTpushInterface.getWebPermission();
+      document.getElementById("per").innerHTML = "浏览器通知权限：" + per;
+    }
+    function getPushAuthority () {
+      console.log("检查推送服务状态", MTpushInterface.getPushAuthority());
+    }
+    function setTagAlias () {
+      let option = document.getElementById('userInput');
+      try {
+        MTpushInterface.setTagsAlias(JSON.parse(option.value))
+      } catch (error) {
+        console.log(error)
+        alert('请输入合法json字串',)
+      }
+    }
+
+  </script>
+
+</html>
