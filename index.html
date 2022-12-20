@@ -104,6 +104,7 @@
           // MTpushInterface.setTagsAlias({ tags: ["test1", "test2"], alias: "swefgwwefwfwfwf" });
         },
         custom: (res) => {
+          console.log('custom', res);
           //当使用自定义提示配置时，需调用res来请求并配置权限
           document.getElementById("xx")?.addEventListener("click", res);
         },
