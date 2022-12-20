@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html style="background-color: #ebebeb;">
 
@@ -36,6 +34,7 @@
     <h1 id="MTpush">MTpush-P example.</h1>
     <h5 id="rid">RegistrationID:</h5>
     <h5 id="per">Browser Notification Permissions:：</h5>
+    <button id="btnCustom">Custom</button><br />
     <button onclick="onEvent()">Set up event listeners</button><br />
     <button onclick="init()">initialization</button><br />
     <button onclick="getRegistrationID()">Get RegistrationID</button><br />
@@ -45,7 +44,7 @@
     <div>Tips: sw.min.1.0.0.js (version number is modified according to the actual situation) Please put it in the root directory of the website, because the service sw.xx.js file can only take over the pages under the directory
     </div>
     <input id="userInput" type="text" placeholder="Please enter tagalias object" style="width:100%">
-    <div>Example：{"tags":["test1","test2"],"alias":"swefgwwefwfwfwf"}</div>
+    <div>Example:{"tags":["test1","test2"],"alias":"swefgwwefwfwfwf"}</div>
     <button onclick="setTagsAlias()">set tag or alias</button><br />
 
   </body>
@@ -80,7 +79,7 @@
     document.getElementById("baseUrl").value = queryUrl.get("baseUrl")
     document.getElementById("webSocketUrl").value = queryUrl.get("webSocketUrl")
 
-    //  推送初始化 
+    //  push initialization 
     MTpushInterface.init(
       {
         report_url: queryUrl.get("report_url"),
@@ -105,8 +104,10 @@
         },
         custom: (res) => {
           console.log('custom', res);
-          //当使用自定义提示配置时，需调用res来请求并配置权限
-          document.getElementById("xx")?.addEventListener("click", res);
+          //When using custom prompt configuration, you need to call res to request and configure permissions
+          document.getElementById("btnCustom").addEventListener("click", function() {
+            console.log('custom click',res);
+          } );
         },
       }
     );
@@ -122,7 +123,7 @@
     };
     function getWebPermission () {
       let per = MTpushInterface.getWebPermission();
-      document.getElementById("per").innerHTML = "Browser Notification Permissions：" + per;
+      document.getElementById("per").innerHTML = "Browser Notification Permissions:" + per;
     }
     function getPushAuthority () {
       console.log("Check push service status", MTpushInterface.getPushAuthority());
