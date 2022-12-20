@@ -55,6 +55,7 @@
     }
     // 请在初始化前注册事件监听
     function onEvent () {
+      console.log('init event');
       // 极光通道断开连接时的回调
       MTpushInterface.mtPush.onDisconnect(function () {
         console.log("onDisconnect");
