@@ -53,17 +53,17 @@
     function applyChangeConfigOnClick(){
 
     }
-    // 请在初始化前注册事件监听
+    // Please register event listener before initialization
     function onEvent() {
       console.log('init event');
-      // 极光通道断开连接时的回调
+      // Callback when Jiguang channel is disconnected
       MTpushInterface.mtPush.onDisconnect(function () {
         console.log("onDisconnect");
       });
-      //得到推送消息(web推送，浏览器厂商通道)
+      //Get push messages (web push, browser vendor channel)
       MTpushInterface.onMsgReceive((msgData) => {
-        //msgData数据结构{data:{xxx},type:0} type:0是极光通道，1是系统通道
-        console.log("得到推送消息:", msgData);
+        //msgData data structure {data:{xxx},type:0} type:0 is the Aurora channel, 1 is the system channel
+        console.log("get push message:", msgData);
       });
     }
 
@@ -83,24 +83,24 @@
     //  推送初始化 
     MTpushInterface.init(
       {
-        report_url: queryUrl.get("report_url"), //统计上报地址 必填
+        report_url: queryUrl.get("report_url"),
         appkey: queryUrl.get("appkey"),
         user_str: queryUrl.get("user_str") || "adminDemo",
         fail (data) {
-          console.log("在线推送创建失败", data);
+          console.log("Failed to create online push", data);
         },
         success (data) {
-          console.log("在线推送创建成功", data);
+          console.log("Online push created successfully", data);
+          onEvent();
         },
         webPushcallback (code, tip) {
-          console.log("用户得到的状态码及提示", code, tip);
+          console.log("The status code and prompt that the user gets", code, tip);
         },
-        baseUrl: queryUrl.get("baseUrl"), //服务器域名如果不存在则用打包时注入的地址
-        //webSocketUrl: queryUrl.get("webSocketUrl"), //服务器域名如果不存在则用打包时注入的地址
+        baseUrl: queryUrl.get("baseUrl"), 
+        //webSocketUrl: queryUrl.get("webSocketUrl"), 
         swUrl: "/test-jpush/sw.min.1.0.0.js";
         canGetInfo (d) {
-          //此时可以得到RegId 也可以在d里面取到所有的数据
-          console.log("得到RegId", MTpushInterface.getRegistrationID(), d);
+          console.log("getRegId", MTpushInterface.getRegistrationID(), d);
           // MTpushInterface.setTagsAlias({ tags: ["test1", "test2"], alias: "swefgwwefwfwfwf" });
         },
         custom: (res) => {
@@ -121,10 +121,10 @@
     };
     function getWebPermission () {
       let per = MTpushInterface.getWebPermission();
-      document.getElementById("per").innerHTML = "浏览器通知权限：" + per;
+      document.getElementById("per").innerHTML = "Browser Notification Permissions：" + per;
     }
     function getPushAuthority () {
-      console.log("检查推送服务状态", MTpushInterface.getPushAuthority());
+      console.log("Check push service status", MTpushInterface.getPushAuthority());
     }
     function setTagAlias () {
       let option = document.getElementById('userInput');
@@ -132,7 +132,7 @@
         MTpushInterface.setTagsAlias(JSON.parse(option.value))
       } catch (error) {
         console.log(error)
-        alert('请输入合法json字串',)
+        alert('Please enter a legal json string',)
       }
     }
 
