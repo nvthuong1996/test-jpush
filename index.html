@@ -92,17 +92,17 @@
           console.log("Online push created successfully", data);
           onEvent();
         },
-        webPushcallback (code, tip) {
+        webPushcallback(code, tip) {
           console.log("The status code and prompt that the user gets", code, tip);
         },
         baseUrl: queryUrl.get("baseUrl"), 
         //webSocketUrl: queryUrl.get("webSocketUrl"), 
         swUrl: "/test-jpush/sw.min.1.0.0.js",
-        canGetInfo (d) {
+        canGetInfo(d) {
           console.log("getRegId", MTpushInterface.getRegistrationID(), d);
           // MTpushInterface.setTagsAlias({ tags: ["test1", "test2"], alias: "swefgwwefwfwfwf" });
         },
-        custom: (res) => {
+        custom:(res) => {
           console.log('custom', res);
           //When using custom prompt configuration, you need to call res to request and configure permissions
           document.getElementById("btnCustom").addEventListener("click", function() {
@@ -112,23 +112,23 @@
       }
     );
 
-    function getRegistrationID () {
+    function getRegistrationID() {
       var rid = MTpushInterface.getRegistrationID();
       document.getElementById("rid").innerHTML = "RegistrationID:" + rid;
     };
 
-    function stopPush () {
+    function stopPush() {
       window.MTpushInterface.mtPush.stopPush();
       getRegistrationID();
     };
-    function getWebPermission () {
+    function getWebPermission() {
       let per = MTpushInterface.getWebPermission();
       document.getElementById("per").innerHTML = "Browser Notification Permissions:" + per;
     }
-    function getPushAuthority () {
+    function getPushAuthority() {
       console.log("Check push service status", MTpushInterface.getPushAuthority());
     }
-    function setTagAlias () {
+    function setTagAlias() {
       let option = document.getElementById('userInput');
       try {
         MTpushInterface.setTagsAlias(JSON.parse(option.value))
