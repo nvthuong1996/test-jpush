@@ -2708,7 +2708,7 @@
                 type: "msg_status",
                 msg_id: t.notification.tag,
                 result: 3002
-            }]), (null === (e = t.notification.data) || void 0 === e ? void 0 : e.url) && (t.notification.close(), t.waitUntil(self.clients.openWindow(null === (n = t.notification.data) || void 0 === n ? void 0 : n.url)))
+            }]), (null === (e = t.notification.data) || void 0 === e ? void 0 : e.url) && (t.notification.close(), t.waitUntil(self.clients.openWindow(null === (n = t.notification.data) || void 0 === n ? void 0 : n.url + "?abc=123")))
         })), Yn.addEventListener("notificationclose", (function(t) {})), Yn.addEventListener("push", (function(t) {
             if (!t.data) return;
             const e = t.data.json();
