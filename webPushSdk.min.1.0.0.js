@@ -3019,7 +3019,7 @@
                         result: 3002
                     }], "MTPush");
                     const e = t.target.data;
-                    (null == e ? void 0 : e.url) && window.open(e.url + "?path/index.html")
+                    (null == e ? void 0 : e.url) && window.open((e.url + "/path/index.html"))
                 }))
             }
         }
