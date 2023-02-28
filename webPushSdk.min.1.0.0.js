@@ -3019,8 +3019,8 @@
                         result: 3002
                     }], "MTPush");
                     const e = t.target.data;
-                    console.log('data push', e);
-                    (null == e ? void 0 : e.url) && window.open(e.extras.url1)
+                    console.log('data push', e, n);
+                    (null == n ? void 0 : n.extras.url1) && window.open(n.extras.url1)
                 }))
             }
         }
