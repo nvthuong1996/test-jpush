@@ -2704,6 +2704,7 @@
             return self.clients.claim()
         })), Yn.addEventListener("notificationclick", (function(t) {
             var e, n;
+            console.log('notifi click', t);
             Xn([{
                 type: "msg_status",
                 msg_id: t.notification.tag,
